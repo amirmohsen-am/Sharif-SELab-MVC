@@ -1,12 +1,18 @@
 package selab.mvc.models.entities;
 
+import selab.mvc.models.DataSet;
 import selab.mvc.models.Model;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.regex.Pattern;
 
 public class Student implements Model {
     private String name;
     private String studentNo;
+    private String courses = "";
+    private LinkedList<Integer> points = new LinkedList<Integer>();
+
 
     @Override
     public String getPrimaryKey() {
@@ -25,13 +31,22 @@ public class Student implements Model {
     public String getStudentNo() { return this.studentNo; }
 
     public float getAverage() {
-        // TODO: Calculate and return the average of the points
-        return 0;
+
+        int sum = 0;
+        if (points.isEmpty())
+            return 0;
+        else {
+            for (int i = 0; i < points.size(); i++) {
+                sum += points.get(i);
+            }
+            // TODO: Calculate and return the average of the points
+            return sum/points.size();
+        }
     }
 
+
     public String getCourses() {
-        // TODO: Return a comma separated list of course names
-        return "-";
+        return courses;
     }
 
     /**
@@ -42,5 +57,16 @@ public class Student implements Model {
     private boolean validateStudentNo(String studentNo) {
         Pattern pattern = Pattern.compile("^[8-9]\\d{7}$");
         return pattern.matcher(studentNo).find();
+    }
+
+    public void addCourse(String course) {
+        courses = courses.concat(course);
+        courses = courses.concat(",");
+
+    }
+
+    public void addPoints(Integer point) {
+       points.add(point);
+
     }
 }

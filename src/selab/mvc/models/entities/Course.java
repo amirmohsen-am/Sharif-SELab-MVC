@@ -1,16 +1,20 @@
 package selab.mvc.models.entities;
 
 import selab.mvc.models.Model;
-import sun.misc.Regexp;
 
+import java.util.LinkedList;
 import java.util.regex.Pattern;
 
 public class Course implements Model {
+    private String students = "";
+    private LinkedList<Integer> points = new LinkedList<Integer>();
     private String title;
     private String courseNo;
     private String startTime = null;
     private String endTime = null;
     private Weekday weekday;
+
+
 
 
     @Override
@@ -60,14 +64,24 @@ public class Course implements Model {
         return this.weekday.name();
     }
 
+
     public float getAverage() {
-        // TODO: Calculate and return the average of the points
-        return 0;
+
+        int sum = 0;
+        if (points.isEmpty())
+            return 0;
+        else {
+            for (int i = 0; i < points.size(); i++) {
+                sum += points.get(i);
+            }
+            // TODO: Calculate and return the average of the points
+            return sum/points.size();
+        }
     }
 
     public String getStudents() {
         // TODO: Return a comma separated list of student names
-        return "-";
+        return students;
     }
 
     /**
@@ -108,5 +122,16 @@ public class Course implements Model {
             return 0;
         else
             return -1;
+    }
+
+    public void addStudent(String student) {
+        students = students.concat(student);
+        students = students.concat(",");
+
+    }
+
+    public void addPoints(Integer point) {
+        points.add(point);
+
     }
 }

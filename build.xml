@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<project name="Hello World Project">
+
+
+    <target name="checkstyle">
+        <taskdef resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties"
+                 classpath="${basedir}/lib/checkstyle-8.19-all.jar"/>
+        <checkstyle config="lib/checkstyle_checks.xml">
+            <fileset dir="src" includes="**/*.java"/>
+        </checkstyle>
+    </target>
+
+    <path id="classpath.base">
+        <fileset dir="lib">
+            <include name="**/*.jar" />
+        </fileset>
+    </path>
+
+    <target name="compile">
+        <javac srcdir="${basedir}/src" destdir="compile_ant">
+            <classpath refid="classpath.base" />
+        </javac>
+    </target>
+
+    <target name="make" depends="compile">
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/HelloWorld.jar" basedir="./compile_ant" >
+            <zipgroupfileset dir="lib" includes="*.jar"/>
+            <manifest>
+                <attribute name="Main-Class" value="Main"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="make">
+        <java jar="build/jar/HelloWorld.jar" fork="true"/>
+    </target>
+
+</project>

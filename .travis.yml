@@ -1,4 +1,4 @@
 language: java
 script:
-  - ant make
+  - ant compile
   - ant checkstyle

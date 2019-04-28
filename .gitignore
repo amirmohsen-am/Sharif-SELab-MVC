@@ -7,5 +7,4 @@
 *.iml
 out
 build
-compile_ant
 gen
